@@ -3,51 +3,233 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Screenspiration — Support</title>
+<title>Screenspiration — Quiet inspiration, always on.</title>
+<meta name="description" content="A calm, ever-changing card of the world's wisdom — living in your Mac's menu bar, drifting across your desktop, always one glance away. Free to try.">
+
+<!-- Open Graph / social preview -->
+<meta property="og:title" content="Screenspiration — Quiet inspiration, always on.">
+<meta property="og:description" content="A calm, ever-changing card of the world's wisdom, living in your Mac's menu bar. Free to try.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://utaguchi57.github.io/screenspiration-support/assets/01-popover.jpg">
+<meta property="og:url" content="https://utaguchi57.github.io/screenspiration-support/">
+<meta name="twitter:card" content="summary_large_image">
+
 <style>
-  :root { color-scheme: light dark; }
-  body {
-    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    max-width: 680px; margin: 0 auto; padding: 48px 22px 80px; color: #1a1a1f;
-    background: #fafafa;
+  :root{
+    color-scheme: light dark;
+    --bg:#f6f5f1; --panel:#ffffff; --text:#1f2328; --muted:#6a7178;
+    --line:#e6e3dc; --accent:#3f6b8c; --accent-ink:#2b4f6b;
+    --card-bg:#252d35; --card-text:#efe9dd;
   }
-  @media (prefers-color-scheme: dark) { body { color: #ececf1; background: #16161a; } a { color: #6ea8fe; } }
-  h1 { font-size: 28px; margin: 0 0 4px; }
-  h2 { font-size: 18px; margin: 34px 0 8px; }
-  .sub { color: #888; margin: 0 0 28px; }
-  a { color: #2563eb; }
-  .faq dt { font-weight: 600; margin-top: 16px; }
-  .faq dd { margin: 4px 0 0; }
-  footer { margin-top: 48px; font-size: 13px; color: #888; }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#14171a; --panel:#1b1f24; --text:#e9eaec; --muted:#9aa3ad;
+      --line:#2a2f36; --accent:#7fb0d4; --accent-ink:#a9cbe6;
+      --card-bg:#252d35; --card-text:#efe9dd;
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; color:var(--text); background:var(--bg);
+    font:17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding:0 24px;}
+  .display{font-family:Georgia,"Times New Roman",serif;}
+
+  /* Hero */
+  header.hero{padding:76px 0 40px; text-align:center;}
+  .mark{display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:30px;}
+  .mark img{width:52px; height:52px; border-radius:12px;}
+  .mark span{font-family:Georgia,serif; font-size:20px; letter-spacing:.3px;}
+  h1.tagline{font-family:Georgia,serif; font-weight:400; font-size:clamp(34px,6vw,54px);
+    line-height:1.12; margin:0 0 18px; letter-spacing:-.4px;}
+  .lede{font-size:clamp(17px,2.4vw,20px); color:var(--muted); max-width:620px;
+    margin:0 auto 34px; line-height:1.55;}
+
+  .cta{display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+    background:var(--accent); color:#fff; font-weight:600; font-size:16px;
+    padding:13px 26px; border-radius:999px; transition:transform .15s ease, filter .15s ease;}
+  .cta:hover{transform:translateY(-1px); filter:brightness(1.06);}
+  .cta.secondary{background:transparent; color:var(--accent); box-shadow:inset 0 0 0 1.5px var(--accent);}
+  .free{display:block; margin-top:14px; color:var(--muted); font-size:14px;}
+
+  /* Video */
+  .stage{margin:52px auto 0; max-width:900px;}
+  .stage video{width:100%; border-radius:16px; display:block;
+    box-shadow:0 24px 60px rgba(0,0,0,.28); background:#000;}
+
+  section{padding:64px 0; border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;}
+  h2{font-family:Georgia,serif; font-weight:400; font-size:clamp(24px,3.6vw,32px);
+    margin:0 0 10px; letter-spacing:-.2px;}
+  .section-lede{color:var(--muted); max-width:640px; margin:0 0 30px;}
+  p.body{max-width:680px;}
+
+  /* Collection tiles */
+  .tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;}
+  .tile{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px 22px;}
+  .tile h3{margin:0 0 4px; font-size:17px;}
+  .tile p{margin:0; color:var(--muted); font-size:15px; line-height:1.5;}
+
+  /* Shots */
+  .shots{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;}
+  figure.shot{margin:0;}
+  figure.shot img{width:100%; border-radius:12px; border:1px solid var(--line);
+    box-shadow:0 10px 30px rgba(0,0,0,.14);}
+  figure.shot figcaption{color:var(--muted); font-size:14px; margin-top:10px; text-align:center;}
+
+  /* Pricing */
+  .price-card{background:var(--panel); border:1px solid var(--line); border-radius:18px;
+    padding:34px 32px; max-width:560px;}
+  .price-big{font-family:Georgia,serif; font-size:30px; margin:18px 0 4px;}
+  .price-big small{font-size:17px; color:var(--muted); font-weight:400;}
+  .price-card ul{margin:16px 0 0; padding-left:20px; color:var(--muted);}
+  .price-card li{margin:6px 0;}
+  .badge{display:inline-block; font-size:13px; color:var(--accent-ink); background:color-mix(in srgb, var(--accent) 14%, transparent);
+    padding:4px 12px; border-radius:999px;}
+
+  /* Private callout */
+  .private{background:var(--panel); border:1px solid var(--line); border-radius:18px;
+    padding:34px 32px; text-align:center;}
+  .private .display{font-size:22px; margin-bottom:8px;}
+
+  /* FAQ */
+  .faq dt{font-weight:600; margin-top:22px;}
+  .faq dd{margin:6px 0 0; color:var(--muted); max-width:680px;}
+
+  footer{border-top:1px solid var(--line); padding:36px 0 60px; color:var(--muted); font-size:14px; text-align:center;}
+  footer a{color:var(--muted);}
+  a{color:var(--accent);}
 </style>
 </head>
 <body>
-  <h1>Screenspiration — Support</h1>
-  <p class="sub">An ambient menu-bar app for macOS that drifts quotes, proverbs, words, and equations across your desktop.</p>
 
-  <h2>Contact</h2>
-  <p>Questions, bugs, or feedback? Email <a href="mailto:UtaguchiLabs@gmail.com">UtaguchiLabs@gmail.com</a> and I'll get back to you.</p>
+<header class="hero">
+  <div class="wrap">
+    <div class="mark">
+      <img src="assets/icon.png" alt="Screenspiration app icon">
+      <span>Screenspiration</span>
+    </div>
+    <h1 class="tagline">Quiet inspiration,<br>always on.</h1>
+    <p class="lede">A calm, ever-changing card of the world's wisdom — living in your Mac's menu bar,
+      drifting across your desktop, always one glance away.</p>
+    <a class="cta" href="https://apps.apple.com/app/id6784901218">Download on the Mac App Store</a>
+    <span class="free">Free to try — no card required.</span>
 
-  <h2>FAQ</h2>
-  <dl class="faq">
-    <dt>Where is the app? I don't see a window.</dt>
-    <dd>Screenspiration lives in your <strong>menu bar</strong> (look for the speech-bubble icon), not the Dock. Click it for the controls and settings.</dd>
+    <div class="stage">
+      <video src="assets/preview.mp4" poster="assets/poster.jpg" autoplay muted loop playsinline controls></video>
+    </div>
+  </div>
+</header>
 
-    <dt>How do I add or remove content?</dt>
-    <dd>Open <strong>Settings</strong> from the menu-bar popover. Each category — Quotes, Proverbs, Words&nbsp;and&nbsp;Ideas, Equations&nbsp;and&nbsp;Formulae — has an <em>Add</em> button, plus <em>Refresh</em> and <em>Randomize</em>. Tick a list to include it in the rotation.</dd>
+<section>
+  <div class="wrap">
+    <h2>What it is</h2>
+    <p class="body">Screenspiration keeps a quiet stream of inspiration drifting across your desktop. No Dock
+      clutter, no window to manage — it lives in the menu bar and gently rotates a single translucent card,
+      so a good idea is always one glance away. You choose what inspires you, and how often it changes.</p>
+  </div>
+</section>
 
-    <dt>How do I change how often quotes change?</dt>
-    <dd>Settings → <strong>Timing</strong>. There's a separate interval for the full-screen idle screen.</dd>
+<section>
+  <div class="wrap">
+    <h2>Choose what inspires you</h2>
+    <p class="section-lede">Six collections. Turn on the ones that speak to you.</p>
+    <div class="tiles">
+      <div class="tile"><h3>Voices</h3><p>Quotes from thinkers, makers, and doers across history.</p></div>
+      <div class="tile"><h3>Proverbs</h3><p>Folk wisdom from world languages, many read aloud in their native tongue.</p></div>
+      <div class="tile"><h3>Words</h3><p>A single word or virtue to sit with.</p></div>
+      <div class="tile"><h3>Virtues</h3><p>Timeless qualities drawn from many traditions.</p></div>
+      <div class="tile"><h3>Moves</h3><p>Thinking tools to shift your perspective when you're stuck.</p></div>
+      <div class="tile"><h3>Science &amp; Nature</h3><p>The elegance of formulae and the structures of important molecules.</p></div>
+    </div>
+  </div>
+</section>
 
-    <dt>How do I hide it temporarily (for a screenshot or presentation)?</dt>
-    <dd>Use the <strong>eye</strong> button in the popover or the Settings title bar. Quotes are also excluded from screen recordings and shares by default.</dd>
+<section>
+  <div class="wrap">
+    <h2>Make it yours</h2>
+    <p class="section-lede">Pick your lists, set the rhythm, and choose from six calm palettes. Pull any idea
+      full-screen with Focus. Save the lines that land as Gems, and let just those rotate. Build your own lists, too.</p>
+    <div class="shots">
+      <figure class="shot"><img src="assets/03-palettes.jpg" alt="Screenspiration palettes"><figcaption>Six calm palettes</figcaption></figure>
+      <figure class="shot"><img src="assets/02-focus.jpg" alt="Focus mode, one idea full screen"><figcaption>One idea, full screen</figcaption></figure>
+      <figure class="shot"><img src="assets/04-moves.jpg" alt="Moves — thinking tools"><figcaption>Think a little differently</figcaption></figure>
+      <figure class="shot"><img src="assets/05-science.jpg" alt="Science &amp; Nature card"><figcaption>Find the elegance in things</figcaption></figure>
+    </div>
+  </div>
+</section>
 
-    <dt>Does it work offline / collect any data?</dt>
-    <dd>Yes, fully offline, and it collects <strong>no data</strong>. See the <a href="privacy.html">Privacy Policy</a>.</dd>
-  </dl>
+<section>
+  <div class="wrap">
+    <div class="private">
+      <div class="display">Completely private</div>
+      <p class="body" style="margin:0 auto; color:var(--muted);">No account. No internet. No tracking. Speech is
+        on-device — nothing ever leaves your Mac. <strong>Screenspiration collects no data of any kind.</strong></p>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    Screenspiration · <a href="privacy.html">Privacy Policy</a> · UtaguchiLabs
-  </footer>
+<section>
+  <div class="wrap">
+    <h2>Honest pricing</h2>
+    <div class="price-card">
+      <span class="badge">Free 14-day trial — everything, no card</span>
+      <div class="price-big">$20 <small>/ year</small> &nbsp;·&nbsp; or $50 <small>once, for life</small></div>
+      <ul>
+        <li><strong>Free forever:</strong> Voices, Words, and Proverbs, the ambient overlay, and the default palette.</li>
+        <li><strong>Sage</strong> unlocks Virtues, Moves, Science &amp; Nature, every palette, Focus, custom lists — and every future collection.</li>
+        <li>No locks, no dark patterns — premium features are simply shown, gently greyed, until you're ready.</li>
+      </ul>
+    </div>
+    <p style="margin-top:26px;">
+      <a class="cta" href="https://apps.apple.com/app/id6784901218">Download on the Mac App Store</a>
+    </p>
+  </div>
+</section>
+
+<section id="support">
+  <div class="wrap">
+    <h2>Support &amp; FAQ</h2>
+    <p class="section-lede">Questions, bugs, or feedback? Email
+      <a href="mailto:UtaguchiLabs@gmail.com">UtaguchiLabs@gmail.com</a> and I'll get back to you.</p>
+    <dl class="faq">
+      <dt>Where is the app? I don't see a window.</dt>
+      <dd>Screenspiration lives in your <strong>menu bar</strong> (look for the icon near the clock), not the Dock.
+        Click it for the controls and settings.</dd>
+
+      <dt>How do I choose what shows up?</dt>
+      <dd>Open <strong>Settings</strong> from the menu-bar popover. Tick any list under a category — Voices, Proverbs,
+        Words, Virtues, Moves, Science &amp; Nature — to include it in the rotation. You can build your own lists too.</dd>
+
+      <dt>How do I change how often it changes?</dt>
+      <dd>Settings → <strong>Timing</strong>. Pick an interval from ten seconds to a day. There's a separate rhythm
+        for the full-screen Focus view.</dd>
+
+      <dt>How do I hide it for a screenshot or presentation?</dt>
+      <dd>Use the hide control in the popover or the Settings title bar. Cards are also excluded from screen
+        recordings and shares by default.</dd>
+
+      <dt>What's Sage?</dt>
+      <dd>The optional premium unlock — Virtues, Moves, Science &amp; Nature, all six palettes, Focus, custom lists,
+        and every future collection. <strong>$20/year, or $50 once for life.</strong> Voices, Words, and Proverbs stay free forever.</dd>
+
+      <dt>Does it work offline / collect any data?</dt>
+      <dd>Yes, fully offline, and it collects <strong>no data</strong>. See the <a href="privacy.html">Privacy Policy</a>.</dd>
+    </dl>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Made by Martin Karl Reeves &nbsp;·&nbsp;
+    <a href="#support">Support</a> &nbsp;·&nbsp;
+    <a href="privacy.html">Privacy</a> &nbsp;·&nbsp;
+    <a href="mailto:UtaguchiLabs@gmail.com">Contact</a>
+  </div>
+</footer>
+
 </body>
 </html>
